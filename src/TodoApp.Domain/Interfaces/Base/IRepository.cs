@@ -6,9 +6,9 @@ namespace TodoApp.Domain.Interfaces;
 /// <summary>
 /// Базовый интерфейс репозитория
 /// </summary>
-/// <typeparam name="T">Тип сущности</typeparam>
-public interface IRepository<T>
-    where T : BaseEntityGuid
+/// <typeparam name="TEntity">Тип сущности</typeparam>
+public interface IRepository<TEntity>
+    where TEntity : BaseEntity<Guid>
 {
     /// <summary>
     /// Получить сущность по идентификатору
@@ -16,15 +16,7 @@ public interface IRepository<T>
     /// <param name="id">Идентификатор сущности</param>
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Сущность или null, если не найдена</returns>
-    Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Получить все сущности с пагинацией
-    /// </summary>
-    /// <param name="request">Параметры пагинации</param>
-    /// <param name="cancellationToken">Токен отмены</param>
-    /// <returns>Результат с пагинацией</returns>
-    Task<PagedResult<T>> GetPagedAsync(PagedRequest request, CancellationToken cancellationToken = default);
+    Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
     
     /// <summary>
     /// Добавить новую сущность
@@ -32,7 +24,7 @@ public interface IRepository<T>
     /// <param name="entity">Сущность для добавления</param>
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Идентификатор добавленной сущности</returns>
-    Task<Guid> AddAsync(T entity, CancellationToken cancellationToken = default);
+    Task<Guid> AddAsync(TEntity entity, CancellationToken cancellationToken = default);
     
     /// <summary>
     /// Обновить существующую сущность
@@ -40,7 +32,7 @@ public interface IRepository<T>
     /// <param name="entity">Сущность для обновления</param>
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Идентификатор обновленной сущности</returns>
-    Task<Guid> UpdateAsync(T entity, CancellationToken cancellationToken = default);
+    Task<Guid> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default);
     
     /// <summary>
     /// Удалить сущность
@@ -48,7 +40,7 @@ public interface IRepository<T>
     /// <param name="entity">Сущность для удаления</param>
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Идентификатор удаленной сущности</returns>
-    Task<Guid> DeleteAsync(T entity, CancellationToken cancellationToken = default);
+    Task<Guid> DeleteAsync(TEntity entity, CancellationToken cancellationToken = default);
     
     /// <summary>
     /// Удалить сущность по идентификатору
